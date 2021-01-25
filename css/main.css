@@ -1,0 +1,55 @@
+body {
+    font-family: 'Titillium Web', sans-serif;
+    min-width:700px;        /* Suppose you want minimum width of 1000px */
+    /* width: auto !important; 
+    width:1000px;   */
+  }
+  .container{
+    min-width:700px;   
+  }
+  .parallax-window {
+    min-height: 500px;
+    background: transparent;
+    /* min-width:1000px;    */
+    /* filter: grayscale(100%); */
+  }
+  .navbar-brand {
+    font-size: 30px;
+    color: #000;
+    font-weight: bold;
+  }
+  .navbar-nav {
+    font-size: 25px;
+    color: #000;
+    font-weight: bold;   
+  }
+  #testimonial {
+    background: #f1f1f1;
+    padding: 50px 0 30px 0;
+    text-align:center;
+    margin-top: 40px;
+  }
+  .profile-pic {
+    border-radius: 50%;
+    border: 8px solid rgb(135, 170, 235);
+    display: block;
+    margin-left: 0%;
+    margin-bottom: 0%;
+    transform: translate(0px, 90px);
+  }
+  .header-name{
+    margin-left: 35%;
+    /* transform: translate(10px, 10px); */
+    /* background: rgb(129, 126, 78); */
+    /* opacity: 0%; */
+  }
+  #header {
+    margin-top: 0px;
+    /* background: url(../img/frontpic.jpg);
+    background-repeat: no-repeat;
+    background-size: auto; */
+    height: 500px;
+  }
+  #about{
+      margin-top: 71px;
+  }
