@@ -114,8 +114,8 @@ body {
     min-height: 365px;
   }
   wc1{
-    font-size: 60px;
-    color:  rgb(83, 27, 50);
+    font-size: 55px;
+    color:  rgb(173, 80, 119);
     font-weight: bold;
   }
   wc2{
@@ -125,7 +125,7 @@ body {
   }
   wc3{
     font-size: 30px;
-    color:  rgb(173, 80, 119);
+    color:  rgb(83, 27, 50);
   }
   wc4{
     font-size: 25px;
