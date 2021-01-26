@@ -429,51 +429,59 @@
 
     sr.reveal('.navbar', {
       duration: 2000,
-      origin: 'bottom'
+      origin: 'bottom',
+      mobile: false 
     });
 
     sr.reveal('.profile-pic', {
       duration: 2000,
       origin: 'top',
-      distance: '300px'
+      distance: '300px',
+      mobile: false 
     });
 
     sr.reveal('.header-name', {
       duration: 2000,
       origin: 'bottom',
-      distance: '300px'
+      distance: '300px',
+      mobile: false 
     });
 
     sr.reveal('.about-me', {
       duration: 3000,
       origin: 'bottom',
-      distance: '500px'
+      distance: '500px',
+      mobile: false 
     });
 
     sr.reveal('.header-content-left', {
       duration: 2000,
       origin: 'left',
-      distance: '300px'
+      distance: '300px',
+      mobile: false 
     });
 
     sr.reveal('.header-content-right', {
       delay: 1000,
       duration: 2000,
       origin: 'bottom',
-      distance: '100px'
+      distance: '300px',
+      mobile: false 
     });
 
     sr.reveal('.skills', {
       duration: 2000,
       origin: 'bottom',
-      distance: '300px'
+      distance: '300px',
+      mobile: false 
     });
 
     sr.reveal('#testimonial div', {
       duration: 2000,
       origin: 'left',
       distance: '300px',
-      viewFactor: 0.2
+      viewFactor: 0.2,
+      mobile: false 
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
