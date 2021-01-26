@@ -1,11 +1,11 @@
 body {
     font-family: 'Titillium Web', sans-serif;
-    min-width:700px;        /* Suppose you want minimum width of 1000px */
+    min-width:200px;        /* Suppose you want minimum width of 1000px */
     /* width: auto !important; 
     width:1000px;   */
   }
   .container{
-    min-width:700px;   
+    min-width:200px;   
   }
   .row [class*='col-']:not(.hid) {
     background-clip: content-box;
@@ -81,15 +81,20 @@ body {
     height: 100%;
     text-align: center;
   }
-  .fade {
-    -webkit-animation-name: fade;
-    -webkit-animation-duration: 1.5s;
-    animation-name: fade;
-    animation-duration: 1.5s;
+  .padding_2{
+    color: white;
+    padding: 0.5%;
+    background-color: rgb(150, 48, 90);
+    border-radius: 10px 10px 10px 10px;
+    width: 100%;
+    height: 10%;
+    text-align: justify;
   }
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
-    height: 410px;
+    position: absolute;
+    top: -30px;
+    /* height: 410px; */
     width: 100px;
     background-size: 100%, 100%;
     background-image: none;
@@ -107,6 +112,23 @@ body {
   }
   .box_1{
     min-height: 365px;
+  }
+  wc1{
+    font-size: 60px;
+    color:  rgb(83, 27, 50);
+    font-weight: bold;
+  }
+  wc2{
+    font-size: 50px;
+    color:  rgb(121, 39, 73);
+    font-weight: bold;
+  }
+  wc3{
+    font-size: 30px;
+    color:  rgb(173, 80, 119);
+  }
+  wc4{
+    font-size: 25px;
   }
   #testimonial {
     background: #f1f1f1;
