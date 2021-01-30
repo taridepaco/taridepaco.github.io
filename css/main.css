@@ -12,13 +12,13 @@ body {
     min-height: 20px;
   }
   .navbar-brand {
-    font-size: 30px;
-    color: rgb(150, 48, 90);/* #000;*/
+    font-size: 25px;
+    /* scolor: rgb(150, 48, 90); */
     font-weight: bold;
   }
   .nav-item {
-    font-size: 25px;
-    color: rgb(150, 48, 90); /*#000;*/
+    font-size: 20px;
+    /* color: rgb(150, 48, 90); */
     font-weight: bold;   
   }
   #header {
@@ -51,6 +51,7 @@ body {
   .header-name{
     margin-left: auto;
     margin-bottom: auto;
+    background-color: rgba(255, 255, 255, 0.295)
     /* transform: translate(10px, 10px); */
     /* background: rgb(129, 126, 78); */
     /* opacity: 0%; */
@@ -79,7 +80,7 @@ body {
     padding: 2%;
     background-color: rgba(150, 48, 90, 0.63);
     border-radius: 20px 20px 20px 20px;
-    width: 100%;
+    width: 80%;
     height: 100%;
     text-align: center;
   }
@@ -88,7 +89,7 @@ body {
     padding: 0.5%;
     background-color: rgb(150, 48, 90);
     border-radius: 10px 10px 10px 10px;
-    width: 95%;
+    width: 80%;
     height: 10%;
     text-align: justify;
     /* margin-left: 10px;

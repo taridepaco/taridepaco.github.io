@@ -8,8 +8,10 @@
   <!-- GOOGLE FONT -->
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
   <!-- BOOTSTRAP 4 -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
   <!-- SCROOLL REVEAL JS LIBRARY CDN -->
   <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
   <!-- CUSTOM CSS -->
@@ -25,52 +27,94 @@
 <body>
 
   <!-- NAVIGATION -->
-  <section id="header">
+  <!-- <section id="header">
     <b class="transparent">h</b>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">@taridepaco</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <ul class="nav navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#header" hrefo="#header">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about" hrefo="#about">About </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#projects" hrefo="#projects">Coding projects </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact" hrefo="#contact">Contact </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/taridepaco">My GitHub </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> -->
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
       <a class="navbar-brand" href="#">@taridepaco</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ml-auto">
-          <a class="nav-item nav-link" href="#header" hrefo="#header">Home </a>
-          <a class="nav-item nav-link" href="#about" hrefo="#about">About </a>
-          <a class="nav-item nav-link" href="#projects" hrefo="#projects">Coding projects </a>
-          <a class="nav-item nav-link" href="#contact" hrefo="#contact">Contact </a>
-          <a class="nav-item nav-link" href="https://github.com/taridepaco">My GitHub </a>
-        </div>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#header" hrefo="#header">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about" hrefo="#about">About </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#projects" hrefo="#projects">Coding projects </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact" hrefo="#contact">Contact </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/taridepaco">My GitHub </a>
+          </li>
+        </ul>
       </div>
     </nav>
 
     <!-- SECTION -->
     <!-- <section id="header"> -->
     <div class="parallax-window" data-parallax="scroll" data-image-src="img/frontpic.jpg">
+      
       <div class="container mt-0">
         <div class="row">
           <div class="col-md-12 mt-0">
-            <h1 class="transparent">h</h1>
+            <h3 class="transparent">h</h3>
           </div>
         </div>
       </div>
-      <div class="container">
+      
+      <div class="container-fluid mt-0">
         <div class="row">
           <div class="col-md-12 col-sm-offset-5 text-center">
             <!-- <div class="col-md-12 mt-0"> -->
             <img class="profile-pic" src="img/profile_pic2.jpeg" alt="">
           </div>
         </div>
+      </div>
+
+      <div class="container-fluid header-name  mt-4">
         <div class="row">
-          <!-- <div class="col-md-12 mt-0"> -->
           <div class="col-md-12 col-sm-offset-5 text-center mt-3">
-            <div class="header-name">
               <h1><b>Daniel Tarí, Ph.D.</b></h1>
               <h2><b>Software developer, coding enthusiast</b></h2>
-            </div>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -101,7 +145,7 @@
             </a>
           </div>
           <div class="col-md-6">
-            <h1 class="mt-2 text_right">About me</h1>
+            <h2 class="mt-2 text_right">About me</h2>
           </div>
         </div>
       </div>
@@ -155,7 +199,7 @@
         <div class="col-md-6 col-sm-6">
           <div class="header-content-left">
             <hr style="height:4px;width:80%;border-width:0;color:rgb(150, 48, 90);background-color: rgb(150, 48, 90)">
-            <h1 class="mt-2 text_right">Education</h1>
+            <h2 class="mt-2 text_right">Education</h2>
             <h3>
               <b>2008-2013</b>
             </h3>
@@ -179,7 +223,7 @@
         <div class="col-md-6 col-sm-6">
           <div class="header-content-right">
             <hr style="height:4px;width:80%;border-width:0;color:rgb(150, 48, 90);background-color: rgb(150, 48, 90)">
-            <h1 class="mt-2 text_right">Experience</h1>
+            <h2 class="mt-2 text_right">Experience</h2>
 
             <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
               <!-- <ol class="carousel-indicators">
@@ -286,7 +330,7 @@
         <div class="row">
           <div class="col-md-12 mt-5">
             <hr style="height:4px;width:80%;border-width:0;color:rgb(150, 48, 90);background-color: rgb(150, 48, 90)">
-            <h1 class="mt-2 text_right">Skills and interests</h1>
+            <h2 class="mt-2 text_right">Skills and interests</h2>
             <div class="text-center">
               <p>
                 <wc4>Technology</wc4>
@@ -326,7 +370,7 @@
       <div class="row mt-3">
         <div class="col-md-12">
           <hr style="height:4px;width:80%;border-width:0;color:rgb(150, 48, 90);background-color: rgb(150, 48, 90)">
-          <h1 class="mt-2 text_right">Coding Projects</h1>
+          <h2 class="mt-2 text_right">Coding Projects</h2>
         </div>
       </div>
     </div>
@@ -388,7 +432,7 @@
       <div class="row mt-3">
         <div class="col-md-12">
           <hr style="height:4px;width:80%;border-width:0;color:rgb(150, 48, 90);background-color: rgb(150, 48, 90)">
-          <h1 class="mt-2 text_right">Contact</h1>
+          <h2 class="mt-2 text_right">Contact</h2>
         </div>
       </div>
     </div>
