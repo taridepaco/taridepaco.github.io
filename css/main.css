@@ -116,7 +116,30 @@ body {
     color:  rgb(83, 27, 50);
   }
   .box_1{
-    min-height: 365px;
+    min-height: 400px;
+  }
+  /* ol.carousel-indicators {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+  } */
+  
+  ol.carousel-indicators li,
+  ol.carousel-indicators li.active {
+    float: left;
+    width: 10%;
+    height: 7;
+    margin: 4;
+    border-radius: 0;
+    border: 0;
+    background:  rgb(255, 178, 211);
+  }
+  
+  ol.carousel-indicators li.active {
+    background:rgb(83, 27, 50);
   }
   wc1{
     font-size: 40px;
