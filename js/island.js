@@ -1,5 +1,6 @@
 /* La isla: una escena three.js dibujada a baja resolución y pasada por un tramado ordenado.
-   Uso: var isla = Island.create(screenEl, projects, onPick); isla.face(i) gira hasta el habitante i.
+   Uso: var isla = Island.create(screenEl, projects, onPick); isla.face(i) gira hasta el habitante i;
+   isla.setNight(true) pone la isla de noche (tema oscuro).
    Cada proyecto con un constructor en BUILD (por id) tiene su figura; el resto recibe un cartel. */
 (function () {
   "use strict";
@@ -17,7 +18,8 @@
     var cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 80);
     cam.position.set(0, 9, 13);
     cam.lookAt(0, 1.7, 0);
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x4a5a66, 0.72));
+    var hemi = new THREE.HemisphereLight(0xffffff, 0x4a5a66, 0.72);
+    scene.add(hemi);
     var sun = new THREE.DirectionalLight(0xffffff, 0.75);
     sun.position.set(-5, 8, 4);
     scene.add(sun);
@@ -38,6 +40,8 @@
     var mats = {};
     function mat(c) { return mats[c] || (mats[c] = new THREE.MeshLambertMaterial({ color: c })); }
     function box(w, h, d, c) { return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(c)); }
+    // cajas que no dependen de la luz: siguen brillando de noche
+    function glow(w, h, d, c) { return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), new THREE.MeshBasicMaterial({ color: c })); }
     function facet(g) { g = g.toNonIndexed(); g.computeVertexNormals(); return g; }
     function put(o, x, z, dy) { o.position.set(x, hAt(x, z) + (dy || 0), z); world.add(o); return o; }
 
@@ -113,7 +117,7 @@
       life: function () {
         var N = 7, cells = [], grid = [], acc = 0, same = 0, i;
         for (i = 0; i < N * N; i++) {
-          var c = box(0.15, 0.1, 0.15, 0xfff3b0);
+          var c = glow(0.15, 0.1, 0.15, 0xfff3b0);
           put(c, 0.4 + (i % N - 3) * 0.2, 1.9 + (Math.floor(i / N) - 3) * 0.2, 0.06);
           cells.push(c); grid.push(rnd() < 0.4 ? 1 : 0);
         }
@@ -210,7 +214,7 @@
         var roofG = new THREE.ConeGeometry(0.6, 0.34, 4); roofG.rotateY(Math.PI / 4);
         var roof = new THREE.Mesh(facet(roofG), mat(0x8c3a2f)); roof.position.y = 0.59; g.add(roof);
         var mast = box(0.04, 0.9, 0.04, 0x2b2f33); mast.position.set(0.5, 0.45, 0); g.add(mast);
-        var lamp = box(0.11, 0.11, 0.11, 0xd9442e); lamp.position.set(0.5, 0.95, 0); g.add(lamp);
+        var lamp = glow(0.11, 0.11, 0.11, 0xff5a3c); lamp.position.set(0.5, 0.95, 0); g.add(lamp);
         put(g, 2.4, -1.8, 0);
         steps.push(function (t) { lamp.visible = (t % 1.4) < 0.9; });
       },
@@ -259,16 +263,19 @@
     /* ---------- tramado: cielo en bandas y color reducido ---------- */
     var rt = new THREE.WebGLRenderTarget(4, 4, { minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter });
     var pScene = new THREE.Scene(), pCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    var U = { t: { value: rt.texture }, night: { value: 0 }, skyA: { value: new THREE.Color("#62bcd6") }, skyB: { value: new THREE.Color("#d9f2de") } };
     pScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
       depthTest: false,
-      uniforms: { t: { value: rt.texture }, skyA: { value: new THREE.Color("#62bcd6") }, skyB: { value: new THREE.Color("#d9f2de") } },
+      uniforms: U,
       vertexShader: "varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}",
       fragmentShader: [
-        "precision mediump float;uniform sampler2D t;uniform vec3 skyA,skyB;varying vec2 vUv;",
+        "precision mediump float;uniform sampler2D t;uniform float night;uniform vec3 skyA,skyB;varying vec2 vUv;",
         "float b2(vec2 a){a=floor(a);return fract(a.x/2.+a.y*a.y*.75);}",
         "float b4(vec2 a){return b2(.5*a)*.25+b2(a);}",
         "void main(){vec4 s=texture2D(t,vUv);float d=b4(gl_FragCoord.xy)-.5;",
         " float g=clamp(floor((vUv.y+d*.16)*7.)/6.,0.,1.);vec3 sky=mix(skyB,skyA,g);",
+        " float st=fract(sin(dot(floor(gl_FragCoord.xy),vec2(12.9898,78.233)))*43758.5453);",
+        " if(night>.5&&st>.9965&&vUv.y>.3)sky=vec3(1.,.96,.78);", // estrellas
         " vec3 c=floor(s.rgb*5.+.5+d*.9)/5.;",
         " gl_FragColor=vec4(mix(sky,c,s.a),1.);}"].join("\n")
     })));
@@ -335,8 +342,16 @@
     }
     requestAnimationFrame(frame);
 
+    function setNight(dk) {
+      U.night.value = dk ? 1 : 0;
+      U.skyA.value.set(dk ? "#0a1424" : "#62bcd6"); U.skyB.value.set(dk ? "#274657" : "#d9f2de");
+      hemi.color.set(dk ? 0x9db4e0 : 0xffffff); hemi.groundColor.set(dk ? 0x18222e : 0x4a5a66); hemi.intensity = dk ? 0.5 : 0.72;
+      sun.color.set(dk ? 0xc6d4ff : 0xffffff); sun.intensity = dk ? 0.42 : 0.75;
+    }
+
     return {
       marks: marks,
+      setNight: setNight,
       face: function (i) { yawTo = -Math.atan2(projects[i].at[0], projects[i].at[2]); }
     };
   }

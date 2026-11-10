@@ -28,7 +28,7 @@ body {
   position: relative;
   border: var(--bw) solid var(--line);
   box-shadow: var(--shadow);
-  background: linear-gradient(#62bcd6, #d9f2de);
+  background: var(--surface);
   aspect-ratio: 16 / 10;
   max-height: 560px;
   width: 100%;

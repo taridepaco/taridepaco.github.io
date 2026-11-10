@@ -21,6 +21,18 @@
   var island = window.Island ? window.Island.create(screen, P, pick) : null;
   if (!island) screen.classList.add("no-gl");
 
+  /* tema: el botón recorre auto -> claro -> oscuro; la isla se hace de noche */
+  var Theme = window.Theme, themeBtn = $("#theme-btn");
+  function syncTheme() {
+    if (island) island.setNight(!!Theme && Theme.isDark());
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = getComputedStyle(root).getPropertyValue("--bg").trim();
+  }
+  if (Theme) {
+    themeBtn.addEventListener("click", function () { Theme.cycle(); });
+    Theme.onChange(function () { syncTheme(); paint(); });
+  } else themeBtn.hidden = true;
+
   function pick(i) { sel = i; paint(); if (island) island.face(i); }
 
   function fmtDate(ym) {
@@ -33,6 +45,7 @@
     document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = t(el.getAttribute("data-i18n")); });
     document.querySelectorAll(".lang-switch button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.lang === lang); });
     legend.setAttribute("aria-label", t("legend"));
+    if (Theme) themeBtn.textContent = t("theme." + Theme.mode());
     P.forEach(function (p, i) {
       chips[i].textContent = (i + 1) + " " + tx(p.name);
       chips[i].setAttribute("aria-pressed", i === sel);
@@ -101,5 +114,6 @@
       .then(function () { btn.disabled = false; paint(); });
   });
 
+  syncTheme();
   paint();
 })();
