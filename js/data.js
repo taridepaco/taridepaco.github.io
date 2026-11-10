@@ -64,7 +64,6 @@ window.SITE = {
       "f.sending": "Enviando…", "f.ok": "Mensaje enviado. Gracias, te contestaré pronto.",
       "f.err": "No se ha podido enviar. Prueba otra vez en un rato.",
       "ct.links": "También estoy en",
-      foot: "Hecho a mano con three.js. Sin rastreadores.",
       "foot.code": "Código de esta página",
       open: "Abrir", live: "En línea", soon: "En camino", legend: "Habitantes de la isla",
       "theme.auto": "Tema: auto", "theme.light": "Tema: claro", "theme.dark": "Tema: oscuro"
@@ -82,7 +81,6 @@ window.SITE = {
       "f.sending": "Sending…", "f.ok": "Message sent. Thanks, I'll reply soon.",
       "f.err": "It could not be sent. Try again in a while.",
       "ct.links": "I'm also on",
-      foot: "Handmade with three.js. No trackers.",
       "foot.code": "Source of this page",
       open: "Open", live: "Online", soon: "On its way", legend: "Island inhabitants",
       "theme.auto": "Theme: auto", "theme.light": "Theme: light", "theme.dark": "Theme: dark"
