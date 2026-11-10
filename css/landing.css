@@ -71,9 +71,7 @@ body {
   line-height: 1;
 }
 .mk[aria-pressed="true"] span { background: var(--accent); color: var(--accent-ink); border-color: var(--accent-ink); }
-/* el elegido solo es clicable si tiene página: entonces se ve como un botón y la mano lo anuncia */
-.mk[aria-pressed="true"] { cursor: default; }
-.mk.go { cursor: pointer; }
+/* el elegido con página se ve como un botón: otro toque lo abre */
 .mk.go span { box-shadow: 2px 2px 0 var(--shade); }
 @media (hover: hover) {
   .mk.go:hover span { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--shade); }
