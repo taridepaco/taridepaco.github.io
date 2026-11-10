@@ -18,7 +18,7 @@
   });
 
   var screen = $("#screen");
-  var island = window.Island ? window.Island.create(screen, P, pick) : null;
+  var island = window.Island ? window.Island.create(screen, P, tap) : null;
   if (!island) screen.classList.add("no-gl");
 
   /* tema: el botón recorre auto -> claro -> oscuro; la isla se hace de noche */
@@ -34,6 +34,9 @@
   } else themeBtn.hidden = true;
 
   function pick(i) { sel = i; paint(); if (island) island.face(i); }
+  // número de la isla: el primer toque lo elige; otro toque sobre el elegido abre su página
+  // (igual que el botón "Abrir" de la tarjeta, que ya apunta a ese proyecto)
+  function tap(i) { if (i === sel && P[i].url) $("#c-link").click(); else pick(i); }
 
   function fmtDate(ym) {
     var d = new Date(ym + "-01T00:00:00");
@@ -50,8 +53,11 @@
       chips[i].textContent = (i + 1) + " " + tx(p.name);
       chips[i].setAttribute("aria-pressed", i === sel);
       if (island) {
-        island.marks[i].setAttribute("aria-pressed", i === sel);
-        island.marks[i].setAttribute("aria-label", tx(p.name));
+        var m = island.marks[i], go = i === sel && !!p.url;
+        m.setAttribute("aria-pressed", i === sel);
+        m.setAttribute("aria-label", go ? t("open") + " " + tx(p.name) : tx(p.name));
+        m.classList.toggle("go", go);
+        if (go) m.title = t("open") + " " + tx(p.name); else m.removeAttribute("title");
       }
     });
 
