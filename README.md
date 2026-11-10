@@ -38,7 +38,9 @@ sistema de diseño:
 Cada proyecto los copia sin cambios y pone lo suyo:
 
 - la web en `web/`, con rutas relativas (un proyecto con compilación, como anter, tiene su propio
-  `deploy/build.sh`, que también deja el resultado en `dist/`);
+  `deploy/build.sh`, que también deja el resultado en `dist/`). Lo que cargue el JavaScript
+  (`fetch` de datos, shaders) va relativo a su módulo, con `new URL('…', import.meta.url)`, y no a la
+  página: `build.sh` deja `index.html` en la raíz y mueve todo lo demás a `v/<hash>/`;
 - `deploy/<nombre>.service`, la unidad de systemd con su nombre y su puerto;
 - `deploy/test.sh`, si tiene pruebas que deben pasar antes de publicar;
 - `dist/` en `.gitignore`;
