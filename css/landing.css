@@ -71,6 +71,12 @@ body {
   line-height: 1;
 }
 .mk[aria-pressed="true"] span { background: var(--accent); color: var(--accent-ink); border-color: var(--accent-ink); }
+/* el elegido con página se ve como un botón: otro toque lo abre */
+.mk.go span { box-shadow: 2px 2px 0 var(--shade); }
+@media (hover: hover) {
+  .mk.go:hover span { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--shade); }
+}
+.mk.go:active span { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--shade); }
 .mk.far { opacity: .45; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 6px; }
