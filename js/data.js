@@ -66,7 +66,8 @@ window.SITE = {
       "ct.links": "También estoy en",
       foot: "Hecho a mano con three.js. Sin rastreadores.",
       "foot.code": "Código de esta página",
-      open: "Abrir", live: "En línea", soon: "En camino", legend: "Habitantes de la isla"
+      open: "Abrir", live: "En línea", soon: "En camino", legend: "Habitantes de la isla",
+      "theme.auto": "Tema: auto", "theme.light": "Tema: claro", "theme.dark": "Tema: oscuro"
     },
     en: {
       "nav.island": "Island", "nav.notebook": "Notebook", "nav.contact": "Contact",
@@ -83,7 +84,8 @@ window.SITE = {
       "ct.links": "I'm also on",
       foot: "Handmade with three.js. No trackers.",
       "foot.code": "Source of this page",
-      open: "Open", live: "Online", soon: "On its way", legend: "Island inhabitants"
+      open: "Open", live: "Online", soon: "On its way", legend: "Island inhabitants",
+      "theme.auto": "Theme: auto", "theme.light": "Theme: light", "theme.dark": "Theme: dark"
     }
   }
 };

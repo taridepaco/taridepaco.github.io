@@ -18,9 +18,11 @@ Todo el contenido está en [`js/data.js`](js/data.js):
 ## Sistema de diseño común
 
 [`css/system.css`](css/system.css) contiene los colores, tipografías y piezas (botones, etiquetas,
-cajas, selector de idioma, formularios) pensados para todas las páginas de proyecto. No depende de
-nada más de este repositorio: para usarlo en otro, se copia el archivo y se enlaza junto a las
-fuentes que indica su cabecera. `css/landing.css` es solo de esta portada.
+cajas, selector de idioma, formularios) pensados para todas las páginas de proyecto, con paleta clara
+y oscura. [`js/theme.js`](js/theme.js) gestiona el tema: sigue al sistema por defecto y guarda la
+elección manual (auto, claro u oscuro). Ninguno de los dos depende de nada más de este repositorio:
+para usarlos en otro, se copian los archivos y se enlazan junto a las fuentes que indica la cabecera
+del CSS. `css/landing.css` es solo de esta portada.
 
 ## Estructura
 
@@ -29,6 +31,7 @@ index.html
 css/system.css     sistema común (portable)
 css/landing.css    maquetación de la portada
 js/data.js         contenido
+js/theme.js        tema claro/oscuro (portable)
 js/island.js       la isla (three.js)
 js/main.js         idioma, tarjeta, cuaderno y formulario
 js/vendor/         three.js r128 (MIT)
