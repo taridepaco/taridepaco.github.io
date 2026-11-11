@@ -1,7 +1,8 @@
 # taridepaco.github.io
 
-Portada personal: una isla 3D en píxeles donde cada proyecto es un habitante, más un cuaderno de
-investigaciones de datos y un formulario de contacto. Sitio estático en `web/`, sin dependencias:
+Portada personal: una isla 3D en píxeles donde cada proyecto es un habitante. Al elegir uno, su
+tarjeta lo presenta; la de la Estación de datos guarda el cuaderno de investigaciones de datos. Debajo,
+un formulario de contacto plegado. Sitio estático en `web/`, sin dependencias:
 `deploy/build.sh` lo construye en `dist/`, que es lo que se publica (ver [DEPLOY.md](DEPLOY.md)).
 
 ## Añadir contenido
@@ -9,7 +10,8 @@ investigaciones de datos y un formulario de contacto. Sitio estático en `web/`,
 Todo el contenido está en [`web/js/data.js`](web/js/data.js):
 
 - **Un número del cuaderno de datos**: una entrada nueva al principio de `notebook`
-  (`n`, `date` como `AAAA-MM`, `title`, `url`, `desc` en `es` y `en`).
+  (`n`, `date` como `AAAA-MM`, `title`, `url`, `desc` en `es` y `en`). Sale en la tarjeta del
+  habitante con `notebook: true`, la Estación de datos.
 - **Un proyecto en la isla**: una entrada en `projects` con su `id`, posición `at` y textos.
   Sin `url` se muestra como "En camino". Si `web/js/island.js` no tiene una figura para ese `id`,
   aparece un cartel genérico; para darle figura propia se añade una función a `BUILD` en ese archivo.

@@ -81,9 +81,11 @@ body {
 
 .legend { display: flex; flex-wrap: wrap; gap: 6px; }
 
-section { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 80px; }
+section, #cuaderno { scroll-margin-top: 80px; }
+section { display: flex; flex-direction: column; gap: 16px; }
 
-.issues { list-style: none; margin: 0; padding: 0; border-top: var(--bw) solid var(--line); }
+/* el cuaderno de datos, dentro de la tarjeta de la Estación de datos */
+.issues { list-style: none; margin: 4px 0 0; padding: 0; border-top: var(--bw) solid var(--line); }
 .issues li {
   display: grid;
   grid-template-columns: 9.5em 1fr;
@@ -92,11 +94,17 @@ section { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 8
   border-bottom: var(--bw) dashed var(--line);
 }
 .issues li > * { min-width: 0; }
+.issues li:last-child { border-bottom: 0; padding-bottom: 0; }
 .issues .body { display: flex; flex-direction: column; gap: 4px; }
+.issues .body .row { margin-top: 6px; }
 @media (max-width: 520px) { .issues li { grid-template-columns: 1fr; } }
 
 .contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; align-items: start; }
-.contact form { display: flex; flex-direction: column; gap: 10px; }
+.contact form { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+/* el formulario está plegado: el botón "Contacta conmigo" lo despliega y, abierto, se queda en blanco */
+.write > summary { list-style: none; cursor: pointer; }
+.write > summary::-webkit-details-marker { display: none; }
+.write[open] > summary { background: var(--surface); color: var(--ink); }
 .contact .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .contact .side { display: flex; flex-direction: column; gap: 14px; }
 

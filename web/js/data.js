@@ -4,10 +4,12 @@
      id     identificador; si js/island.js tiene un constructor con ese id, dibuja su figura.
             Si no lo tiene, aparece un cartel genérico en ese punto.
      at     [x, altura del marcador, z] dentro de la isla (radio útil ~3.3, altura del suelo 0.4-1).
-     url    página del proyecto. Sin url se muestra como "En camino".
+     url    página del proyecto. Sin url (ni notebook) se muestra como "En camino".
+     notebook true: su tarjeta muestra el cuaderno de datos (NOTEBOOK) en vez del botón "Abrir".
      name, kind, desc: texto, o {es, en}.
 
-   NOTEBOOK: el cuaderno de datos, un número por investigación. El más reciente va arriba. */
+   NOTEBOOK: el cuaderno de datos, un número por investigación. El más reciente va arriba.
+             Se ve en la tarjeta del habitante con notebook: true (la Estación de datos). */
 window.SITE = {
   projects: [
     { id: "boider", name: "Boider", at: [0.5, 4.6, 0.5], url: "https://taridepaco.github.io/Boider/",
@@ -34,7 +36,7 @@ window.SITE = {
       kind: { es: "Juego", en: "Game" },
       desc: { es: "Genera sudokus listos para jugar y también los resuelve.",
               en: "Generates ready-to-play sudokus and solves them too." } },
-    { id: "datos", name: { es: "Estación de datos", en: "Data station" }, at: [2.4, 2.6, -1.8], url: "#cuaderno",
+    { id: "datos", name: { es: "Estación de datos", en: "Data station" }, at: [2.4, 2.6, -1.8], notebook: true,
       kind: { es: "Datos", en: "Data" },
       desc: { es: "Aquí se publica el cuaderno de datos: una investigación de data science al mes.",
               en: "The data notebook is published here: one data science investigation a month." } },
@@ -55,11 +57,10 @@ window.SITE = {
       "nav.island": "Isla", "nav.notebook": "Cuaderno", "nav.contact": "Contacto",
       h1: "Una isla donde cada proyecto está vivo",
       pitch: "Simuladores, investigaciones de datos y cacharros. Arrastra para girar la isla y toca un número para ver quién vive ahí.",
-      "nb.h": "Cuaderno de datos",
-      "nb.p": "Una investigación de data science al mes.",
       "nb.read": "Leer la investigación",
       "ct.h": "Contacto",
       "ct.p": "¿Una idea, una duda o un simulador que debería existir? Escríbeme.",
+      "ct.open": "Contacta conmigo",
       "f.name": "Nombre", "f.mail": "Correo", "f.msg": "Mensaje", "f.send": "Enviar",
       "f.sending": "Enviando…", "f.ok": "Mensaje enviado. Gracias, te contestaré pronto.",
       "f.err": "No se ha podido enviar. Prueba otra vez en un rato.",
@@ -72,11 +73,10 @@ window.SITE = {
       "nav.island": "Island", "nav.notebook": "Notebook", "nav.contact": "Contact",
       h1: "An island where every project is alive",
       pitch: "Simulators, data research and tinkering. Drag to spin the island and tap a number to see who lives there.",
-      "nb.h": "Data notebook",
-      "nb.p": "One data science investigation a month.",
       "nb.read": "Read the research",
       "ct.h": "Contact",
       "ct.p": "An idea, a question or a simulator that should exist? Write to me.",
+      "ct.open": "Contact me",
       "f.name": "Name", "f.mail": "Email", "f.msg": "Message", "f.send": "Send",
       "f.sending": "Sending…", "f.ok": "Message sent. Thanks, I'll reply soon.",
       "f.err": "It could not be sent. Try again in a while.",
