@@ -4,6 +4,8 @@
   var SITE = window.SITE, P = SITE.projects, root = document.documentElement;
   var $ = function (s) { return document.querySelector(s); };
   var lang = root.lang === "en" ? "en" : "es", sel = 0, formState = null;
+  var nbIdx = -1; // el habitante que guarda el cuaderno de datos (notebook: true)
+  P.forEach(function (p, i) { if (p.notebook) nbIdx = i; });
   function t(k) { return SITE.text[lang][k]; }
   function tx(v) { return typeof v === "string" ? v : v[lang]; }
 
@@ -65,7 +67,7 @@
     $("#c-kind").textContent = tx(p.kind);
     $("#c-name").textContent = tx(p.name);
     $("#c-desc").textContent = tx(p.desc);
-    $("#c-status").textContent = p.about ? "" : (p.url ? t("live") : t("soon"));
+    $("#c-status").textContent = p.about ? "" : (p.url || p.notebook ? t("live") : t("soon"));
     var a = $("#c-link");
     a.hidden = !p.url;
     if (p.url) {
@@ -76,9 +78,11 @@
       else { a.target = "_blank"; a.rel = "noopener"; }
     }
 
+    // el cuaderno de datos: las investigaciones apiladas en la tarjeta, cada una con su botón
     var list = $("#issues");
+    list.hidden = !p.notebook;
     list.innerHTML = "";
-    SITE.notebook.forEach(function (n) {
+    if (p.notebook) SITE.notebook.forEach(function (n) {
       var li = document.createElement("li");
       var meta = document.createElement("span");
       meta.className = "util";
@@ -86,9 +90,9 @@
       var body = document.createElement("div"); body.className = "body";
       var h = document.createElement("h3"); h.textContent = n.title;
       var d = document.createElement("p"); d.textContent = tx(n.desc);
-      var l = document.createElement("a"); l.href = n.url; l.target = "_blank"; l.rel = "noopener"; l.textContent = t("nb.read");
-      var lp = document.createElement("p"); lp.appendChild(l);
-      body.appendChild(h); body.appendChild(d); body.appendChild(lp);
+      var l = document.createElement("a"); l.className = "btn"; l.href = n.url; l.target = "_blank"; l.rel = "noopener"; l.textContent = t("nb.read");
+      var lr = document.createElement("div"); lr.className = "row"; lr.appendChild(l);
+      body.appendChild(h); body.appendChild(d); body.appendChild(lr);
       li.appendChild(meta); li.appendChild(body);
       list.appendChild(li);
     });
@@ -120,6 +124,18 @@
       .then(function () { btn.disabled = false; paint(); });
   });
 
+  /* menú: "Cuaderno" elige la Estación de datos y el navegador baja a su tarjeta (#cuaderno);
+     "Contacto" despliega el formulario antes de bajar a él. También al llegar con esos enlaces. */
+  var contactBox = $("#contact-box");
+  function route(hash) {
+    if (hash === "#cuaderno" && nbIdx >= 0) pick(nbIdx);
+    if (hash === "#contacto") contactBox.open = true;
+  }
+  document.querySelectorAll('.topbar nav a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function () { route(a.getAttribute("href")); });
+  });
+
   syncTheme();
   paint();
+  route(location.hash);
 })();

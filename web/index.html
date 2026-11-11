@@ -54,35 +54,34 @@
         <p class="pitch" data-i18n="pitch">Simuladores, investigaciones de datos y cacharros. Arrastra para girar la isla y toca un número para ver quién vive ahí.</p>
         <div class="screen" id="screen"><canvas aria-hidden="true"></canvas></div>
         <div class="legend" id="legend" role="group"></div>
-        <article class="card" aria-live="polite">
+        <!-- id="cuaderno": el cuaderno de datos vive en esta tarjeta cuando está elegida la Estación de datos -->
+        <article class="card" id="cuaderno" aria-live="polite">
           <div class="row"><span class="tag" id="c-kind"></span><span class="util" id="c-status"></span></div>
           <h2 id="c-name"></h2>
           <p id="c-desc"></p>
+          <ol class="issues" id="issues" hidden></ol>
           <div class="row"><a class="btn" id="c-link" hidden></a></div>
         </article>
-      </section>
-
-      <section id="cuaderno">
-        <h2 data-i18n="nb.h">Cuaderno de datos</h2>
-        <p data-i18n="nb.p">Una investigación de data science al mes.</p>
-        <ol class="issues" id="issues"></ol>
       </section>
 
       <section id="contacto">
         <h2 data-i18n="ct.h">Contacto</h2>
         <p data-i18n="ct.p">¿Una idea, una duda o un simulador que debería existir? Escríbeme.</p>
         <div class="contact">
-          <form class="card" id="contact-form" action="https://formspree.io/f/myybvgwj" method="POST">
-            <label><span class="util" data-i18n="f.name">Nombre</span>
-              <input id="f-name" type="text" name="name" autocomplete="name" required></label>
-            <label><span class="util" data-i18n="f.mail">Correo</span>
-              <input id="f-mail" type="email" name="_replyto" autocomplete="email" required></label>
-            <label><span class="util" data-i18n="f.msg">Mensaje</span>
-              <textarea id="f-msg" name="message" required></textarea></label>
-            <div class="hp" aria-hidden="true"><input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
-            <div class="row"><button class="btn" type="submit" id="f-send" data-i18n="f.send">Enviar</button></div>
-            <p id="f-note" role="status" hidden></p>
-          </form>
+          <details class="write" id="contact-box">
+            <summary class="btn" data-i18n="ct.open">Contacta conmigo</summary>
+            <form class="card" id="contact-form" action="https://formspree.io/f/myybvgwj" method="POST">
+              <label><span class="util" data-i18n="f.name">Nombre</span>
+                <input id="f-name" type="text" name="name" autocomplete="name" required></label>
+              <label><span class="util" data-i18n="f.mail">Correo</span>
+                <input id="f-mail" type="email" name="_replyto" autocomplete="email" required></label>
+              <label><span class="util" data-i18n="f.msg">Mensaje</span>
+                <textarea id="f-msg" name="message" required></textarea></label>
+              <div class="hp" aria-hidden="true"><input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+              <div class="row"><button class="btn" type="submit" id="f-send" data-i18n="f.send">Enviar</button></div>
+              <p id="f-note" role="status" hidden></p>
+            </form>
+          </details>
           <div class="side">
             <span class="util" data-i18n="ct.links">También estoy en</span>
             <div class="row">
