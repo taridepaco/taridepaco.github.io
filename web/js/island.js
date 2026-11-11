@@ -318,7 +318,9 @@
     function frame(now) {
       requestAnimationFrame(frame);
       if (!visible || document.hidden) { last = now; return; }
-      var dt = Math.min(0.05, (now - last) / 1000); last = now;
+      // the first frame's timestamp can be earlier than `last` (taken when the island was set up):
+      // a negative dt would push the time below 0 and the ants off their path
+      var dt = Math.max(0, Math.min(0.05, (now - last) / 1000)); last = now;
       var sdt = still ? 0 : dt;
       time += sdt; idle += dt;
       if (yawTo !== null) {
