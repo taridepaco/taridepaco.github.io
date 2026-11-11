@@ -30,7 +30,7 @@ window.SITE = {
       kind: { es: "Generador", en: "Generator" },
       desc: { es: "Fractales que se mueven solos hasta que los tocas: Mandelbrot, dragones, árboles y más.",
               en: "Fractals that move on their own until you touch them: Mandelbrot, dragons, trees and more." } },
-    { id: "sudoker", name: "Sudoker", at: [0.9, 1.0, -3.0], url: "https://github.com/taridepaco/Sudoker",
+    { id: "sudoker", name: "Sudoker", at: [0.9, 1.0, -3.0], url: "https://taridepaco.github.io/Sudoker/",
       kind: { es: "Juego", en: "Game" },
       desc: { es: "Genera sudokus listos para jugar y también los resuelve.",
               en: "Generates ready-to-play sudokus and solves them too." } },
