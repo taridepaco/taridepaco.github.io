@@ -30,6 +30,8 @@
     // con "reducir movimiento" el tiempo no avanza: todo se queda quieto en su estado completo
     var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
     function sstep(a, b, x) { var t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+    function cl(u) { return Math.min(1, Math.max(0, u)); }
+    function out(u) { u = cl(u); return 1 - (1 - u) * (1 - u) * (1 - u); } // arranca rápido y frena
     // altura del terreno: prado ondulado, una montaña y una loma
     function hAt(x, z) {
       var r = Math.sqrt(x * x + z * z), m = sstep(5.0, 3.3, r);
@@ -221,8 +223,6 @@
 
         // ciclo de 16 s: crece 0-3.2, florece 3.2-4.3, completo hasta 11, caen las flores, se recoge desde 14
         var T = 16, D = 0.8, BLOOM = 4 * D, FALL = 11, BACK = 14, FULL = 8;
-        function cl(u) { return Math.min(1, Math.max(0, u)); }
-        function out(u) { u = cl(u); return 1 - (1 - u) * (1 - u) * (1 - u); }
         function pop(u) { u = cl(u) - 1; return 1 + 2.7 * u * u * u + 1.7 * u * u; } // se pasa un poco y vuelve
         function size(o, s) { o.visible = s > 0.001; o.scale.setScalar(Math.max(s, 0.001)); }
         steps.push(function (time) {
@@ -242,11 +242,50 @@
         });
       },
 
+      // una caja de sudoku: la altura de cada celda es su número (1-9). En cada ciclo se vacía y se
+      // resuelve en orden de lectura: cada celda sube en azul hasta su número; a veces antes prueba uno
+      // ya puesto en la caja y sube en rojo hasta la altura del repetido. Resuelta, vuelve a blanco.
       sudoker: function () {
-        for (var i = 0; i < 9; i++) {
-          var h = 0.1 + ((i * 5) % 9) * 0.035;
-          put(box(0.2, h, 0.2, i % 2 ? 0xb8bcb4 : 0x9ea39b), 0.9 + (i % 3 - 1) * 0.25, -3.0 + (Math.floor(i / 3) - 1) * 0.25, h / 2);
+        var cells = [], geo = new THREE.BoxGeometry(0.2, 1, 0.2), i;
+        var BLUE = new THREE.Color(0x3a7bd5), RED = new THREE.Color(0xd9442e);
+        var sol = [1, 6, 2, 7, 3, 8, 4, 9, 5], prev = sol, wrong = [0, 0, 0, 0, 0, 0, 0, 0, 0], cyc = -1;
+        function hd(d) { return d ? 0.1 + (d - 1) * 0.035 : 0.03; } // altura del número d; 0 es vacía
+        for (i = 0; i < 9; i++) {
+          var white = new THREE.Color(i % 2 ? 0xb8bcb4 : 0x9ea39b);
+          var m = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ color: white }));
+          put(m, 0.9 + (i % 3 - 1) * 0.25, -3.0 + (Math.floor(i / 3) - 1) * 0.25, 0);
+          m.userData = { y: m.position.y, white: white };
+          cells.push(m);
         }
+        // sudoku nuevo: otra permutación, y en algunas celdas un intento con un número ya puesto
+        function plan() {
+          prev = sol; sol = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+          for (var k = 8; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = sol[k]; sol[k] = sol[j]; sol[j] = x; }
+          wrong = sol.map(function (d, k) { return k && Math.random() < 0.45 ? sol[Math.floor(Math.random() * k)] : 0; });
+        }
+
+        // ciclo de 11 s: se vacía 0-0.6, se rellena 1-6.5, vuelve a blanco 6.8-7.3 y se queda así
+        var T = 11, S = 1, STEP = 0.6, TRY = 0.45, DONE = S + 9 * STEP + 0.4;
+        steps.push(function (time) {
+          var n = Math.floor(time / T), c = still ? T - 1 : time - n * T;
+          if (!still && n !== cyc) { cyc = n; plan(); }
+          cells.forEach(function (m, k) {
+            var s = S + k * STEP, w = wrong[k], col = m.material.color, h;
+            col.copy(m.userData.white);
+            if (c < s) h = hd(prev[k]) + (hd(0) - hd(prev[k])) * out(c / 0.6);
+            else if (w && c < s + TRY) {
+              h = hd(0) + (hd(w) - hd(0)) * out((c - s) / 0.25);
+              col.lerp(RED, cl((c - s) / 0.25));
+            } else {
+              var from = w ? hd(w) : hd(0), u = (c - s - (w ? TRY : 0)) / 0.25;
+              h = from + (hd(sol[k]) - from) * out(u);
+              if (w) col.copy(RED);
+              col.lerp(BLUE, cl(u)).lerp(m.userData.white, cl((c - DONE) / 0.5));
+            }
+            m.scale.y = h;
+            m.position.y = m.userData.y + h / 2;
+          });
+        });
       },
 
       datos: function () {
