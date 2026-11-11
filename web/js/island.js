@@ -27,6 +27,8 @@
     /* ---------- utilidades ---------- */
     var seed = 7;
     function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    // con "reducir movimiento" el tiempo no avanza: todo se queda quieto en su estado completo
+    var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
     function sstep(a, b, x) { var t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
     // altura del terreno: prado ondulado, una montaña y una loma
     function hAt(x, z) {
@@ -185,20 +187,59 @@
         });
       },
 
+      // árbol fractal que crece nivel a nivel (tronco, 3, 9 y 27 ramas), florece en las puntas,
+      // suelta las flores, recoge las ramas en orden inverso y vuelve a empezar.
+      // Cada rama es un grupo con el pivote en su base: escalarlo hace crecer la rama y lo que lleva encima.
       fractal: function () {
-        function grow(parent, len, depth) {
+        var levels = [[], [], [], []], leaves = [];
+        function grow(node, len, depth) {
+          levels[3 - depth].push(node);
           var b = box(len * 0.14, len, len * 0.14, 0x6b4a2f);
-          b.position.y = len / 2; parent.add(b);
-          if (!depth) { var l = box(len * 0.9, len * 0.9, len * 0.9, 0xe9879a); l.position.y = len; parent.add(l); return; }
+          b.position.y = len / 2; node.add(b);
+          if (!depth) { var l = box(len * 0.9, len * 0.9, len * 0.9, 0xe9879a); l.position.y = len; node.add(l); leaves.push(l); return; }
           for (var k = 0; k < 3; k++) {
             var g = new THREE.Group();
             g.position.y = len; g.rotation.y = k * 2.094 + depth; g.rotation.z = 0.62;
-            parent.add(g); grow(g, len * 0.66, depth - 1);
+            node.add(g); grow(g, len * 0.66, depth - 1);
           }
         }
         var t = new THREE.Group();
         grow(t, 0.75, 3);
         put(t, 3.0, 0.6, 0);
+
+        // cada flor cae en vertical hasta el suelo: esa recta, pasada a los ejes de su rama
+        world.updateMatrixWorld(true);
+        var qt = t.getWorldQuaternion(new THREE.Quaternion()).invert(), v = new THREE.Vector3();
+        leaves.forEach(function (l) {
+          var p = t.worldToLocal(l.getWorldPosition(v));
+          var drop = p.y - (hAt(t.position.x + p.x, t.position.z + p.z) - t.position.y) - 0.08;
+          var q = qt.clone().multiply(l.parent.getWorldQuaternion(new THREE.Quaternion())).invert();
+          // Math.random y no rnd(): rnd() es la semilla que coloca los pinos
+          l.userData = { y: l.position.y, down: new THREE.Vector3(0, -drop, 0).applyQuaternion(q),
+                         bloom: Math.random() * 0.7, fall: Math.random() * 1.2 };
+        });
+
+        // ciclo de 16 s: crece 0-3.2, florece 3.2-4.3, completo hasta 11, caen las flores, se recoge desde 14
+        var T = 16, D = 0.8, BLOOM = 4 * D, FALL = 11, BACK = 14, FULL = 8;
+        function cl(u) { return Math.min(1, Math.max(0, u)); }
+        function out(u) { u = cl(u); return 1 - (1 - u) * (1 - u) * (1 - u); }
+        function pop(u) { u = cl(u) - 1; return 1 + 2.7 * u * u * u + 1.7 * u * u; } // se pasa un poco y vuelve
+        function size(o, s) { o.visible = s > 0.001; o.scale.setScalar(Math.max(s, 0.001)); }
+        steps.push(function (time) {
+          var c = still ? FULL : time % T;
+          levels.forEach(function (lv, L) {
+            var s = c < BACK ? out((c - L * D) / D) : 1 - Math.pow(cl((c - BACK - (3 - L) * 0.3) / 0.3), 2);
+            lv.forEach(function (n) { size(n, s); });
+          });
+          leaves.forEach(function (l) {
+            var d = l.userData, u = 0, s;
+            if (c < FALL) s = pop((c - BLOOM - d.bloom) / 0.35);
+            else { u = cl((c - FALL - d.fall) / 0.9); s = 1 - cl((c - FALL - d.fall - 1.3) / 0.3); }
+            size(l, s);
+            l.position.set(0, d.y, 0).addScaledVector(d.down, u * u);
+            l.rotation.set(u * 2.2, 0, u * 1.3);
+          });
+        });
       },
 
       sudoker: function () {
@@ -311,7 +352,6 @@
     window.addEventListener("pointercancel", function () { drag = null; });
 
     /* ---------- bucle ---------- */
-    var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
     var visible = true;
     if (window.IntersectionObserver) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(screen);
     var last = performance.now(), time = 0, pv = new THREE.Vector3();
