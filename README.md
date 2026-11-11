@@ -38,14 +38,16 @@ sistema de diseño:
 Cada proyecto los copia sin cambios y pone lo suyo:
 
 - la web en `web/`, con rutas relativas (un proyecto con compilación, como anter, tiene su propio
-  `deploy/build.sh`, que también deja el resultado en `dist/`);
+  `deploy/build.sh`, que también deja el resultado en `dist/`). Lo que cargue el JavaScript
+  (`fetch` de datos, shaders) va relativo a su módulo, con `new URL('…', import.meta.url)`, y no a la
+  página: `build.sh` deja `index.html` en la raíz y mueve todo lo demás a `v/<hash>/`;
 - `deploy/<nombre>.service`, la unidad de systemd con su nombre y su puerto;
 - `deploy/test.sh`, si tiene pruebas que deben pasar antes de publicar;
 - `dist/` en `.gitignore`;
 - en GitHub, *Settings → Pages → Source: GitHub Actions*.
 
 Puertos en el servidor propio: Boider 8002, GameOfLifer (`lifer`) 8003, Prey 8004, Anter 8005,
-esta portada 8006.
+esta portada 8006, MusicTopicEvolution (`music`) 8007.
 
 ## Estructura
 
