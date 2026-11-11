@@ -47,7 +47,7 @@ Cada proyecto los copia sin cambios y pone lo suyo:
 - en GitHub, *Settings → Pages → Source: GitHub Actions*.
 
 Puertos en el servidor propio: Boider 8002, GameOfLifer (`lifer`) 8003, Prey 8004, Anter 8005,
-esta portada 8006, MusicTopicEvolution (`music`) 8007.
+esta portada 8006, MusicTopicEvolution (`music`) 8007, Fractal Designer (`fractal`) 8008.
 
 ## Estructura
 
